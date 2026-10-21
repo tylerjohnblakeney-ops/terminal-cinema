@@ -1,41 +1,29 @@
-import urllib.parse
 import webbrowser
+import urllib.parse
 
-def main():
-    print("=== MULTI-SERVER TERMINAL SCRApER ===")
-    title = input("Enter Movie or TV Show Title: ").strip()
+def watch_show():
+    # 1. Ask the user what they want to watch
+    query = input("Enter the movie or TV show name: ")
     
-    if not title:
-        print("Error: Title cannot be empty.")
+    if not query.strip():
+        print("Please enter a valid name!")
         return
-        
-    # Clean and format the text input for URL variables
-    # Lowercase text and URL encoding ensures special characters/spaces don't break the web request
-    clean_title = title.lower()
-    encoded_title = urllib.parse.quote(clean_title)
-    dash_title = urllib.parse.quote(clean_title.replace(" ", "-"))
+
+    # 2. Clean the input and encode spaces properly
+    # This turns "Breaking Bad" into "Breaking%20Bad" for search engines
+    encoded_query = urllib.parse.quote(query)
     
-    # An array storing multiple distinct api mirrors to prevent single-domain failure
-    providers = {
-        "VidLink Pro Engine": f"https://vidlink.pro{dash_title}",
-        "Vidsrc XYZ Database": f"https://vidsrc.xyz{encoded_title}",
-        "Vidsrc SU Network": f"https://vidsrc.su{encoded_title}"
-    }
+    # 3. Choose your target search format
+    # OPTION A: Take them directly to a Google Search for that show on your streaming site
+    url = f"https://google.com+{encoded_query}"
     
-    print(f"\nScraping active indices for: '{title}'...\n")
-    print("-" * 50)
+    # OPTION B: If your site has a direct search URL format (like ://site.com)
+    # url = f"https://cinevu.icu{encoded_query}"
+
+    print(f"Opening streaming search for: {query}...")
     
-    # Iterate through each provider key and value in the array dictionary
-    for name, url in providers.items():
-        print(f"[+] Found mirror via {name}:")
-        print(f"    --> {url}\n")
-        
-    print("-" * 50)
-    choice = input("Would you like to open the first working mirror automatically? (y/n): ").lower()
-    if choice == 'y':
-        # Selects the first item in the dictionary to send to the browser engine
-        first_url = list(providers.values())[0]
-        webbrowser.open(first_url)
+    # 4. Open it automatically in the default web browser
+    webbrowser.open(url)
 
 if __name__ == "__main__":
-    main()
+    watch_show()
