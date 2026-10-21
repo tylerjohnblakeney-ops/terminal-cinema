@@ -1,15 +1,19 @@
 import urllib.parse
 
 
-STREAMING_SERVICES = {
-    "Tubi (free with ads)": "tubitv.com",
-    "Pluto TV (free with ads)": "pluto.tv",
-    "Plex (free with ads)": "watch.plex.tv",
-    "The Roku Channel (free with ads)": "therokuchannel.roku.com",
-    "Kanopy (library access)": "kanopy.com",
-    "Hoopla (library access)": "hoopladigital.com",
-    "YouTube (free movies)": "youtube.com",
+STREAMING_SITES = {
+    "Tubi": "https://tubitv.com/",
+    "Pluto TV": "https://pluto.tv/",
+    "Plex": "https://watch.plex.tv/",
+    "The Roku Channel": "https://therokuchannel.roku.com/",
+    "Kanopy": "https://www.kanopy.com/",
+    "Hoopla": "https://www.hoopladigital.com/",
+    "YouTube": "https://www.youtube.com/",
 }
+
+print("\nFree streaming sites:")
+for name, url in STREAMING_SITES.items():
+    print(f"{name}: {url}")
 
 
 def google_search_url(query):
