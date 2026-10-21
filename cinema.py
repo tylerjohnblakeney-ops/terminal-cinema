@@ -8,6 +8,7 @@ STREAMING_SERVICES = {
     "The Roku Channel (free with ads)": "therokuchannel.roku.com",
     "Kanopy (library access)": "kanopy.com",
     "Hoopla (library access)": "hoopladigital.com",
+    "YouTube (free movies)": "youtube.com",
 }
 
 
