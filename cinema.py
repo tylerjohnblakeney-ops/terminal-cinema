@@ -1,5 +1,4 @@
 import urllib.parse
-import webbrowser
 
 
 STREAMING_SERVICES = {
@@ -11,7 +10,7 @@ STREAMING_SERVICES = {
 }
 
 
-def make_google_search(query):
+def google_search_url(query):
     return "https://www.google.com/search?" + urllib.parse.urlencode(
         {"q": query}
     )
@@ -23,46 +22,24 @@ def watch_show():
         print("Please enter a valid name.")
         return
 
-    country = input("Country or region (for example, US or GB) [US]: ").strip()
-    country = country or "US"
-
     links = [
         (
-            "JustWatch availability search",
-            make_google_search(f'"{title}" JustWatch where to watch {country}'),
+            "Check availability on JustWatch",
+            google_search_url(f'"{title}" JustWatch where to watch'),
         )
     ]
 
     for service, domain in STREAMING_SERVICES.items():
         links.append(
             (
-                f"{service} search",
-                make_google_search(f'site:{domain} "{title}"'),
+                f"Search {service}",
+                google_search_url(f'site:{domain} "{title}"'),
             )
         )
 
     print(f"\nSearch links for: {title}")
     for number, (label, url) in enumerate(links, start=1):
-        print(f"{number}. {label}\n   {url}")
-
-    while True:
-        choice = input("\nEnter a number to open a link, or 0 to quit: ").strip()
-
-        if choice == "0":
-            return
-
-        try:
-            index = int(choice) - 1
-            if not 0 <= index < len(links):
-                raise ValueError
-        except ValueError:
-            print(f"Enter a number from 1 to {len(links)}, or 0 to quit.")
-            continue
-
-        opened = webbrowser.open_new_tab(links[index][1])
-        if not opened:
-            print("Could not open a browser here. Copy the URL printed above.")
-        return
+        print(f"\n{number}. {label}\n   {url}")
 
 
 if __name__ == "__main__":
