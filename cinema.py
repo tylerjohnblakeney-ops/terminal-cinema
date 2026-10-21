@@ -11,44 +11,58 @@ STREAMING_SERVICES = {
 }
 
 
+def make_google_search(query):
+    return "https://www.google.com/search?" + urllib.parse.urlencode(
+        {"q": query}
+    )
+
+
 def watch_show():
     title = input("Enter a movie or TV show name: ").strip()
     if not title:
         print("Please enter a valid name.")
         return
 
-    country = input("Country code for JustWatch (for example, US or GB) [US]: ")
-    country = country.strip().lower() or "us"
+    country = input("Country or region (for example, US or GB) [US]: ").strip()
+    country = country or "US"
 
-    encoded_title = urllib.parse.quote_plus(title)
     links = [
         (
-            "JustWatch — check availability",
-            f"https://www.justwatch.com/{country}/search?q={encoded_title}",
+            "JustWatch availability search",
+            make_google_search(f'"{title}" JustWatch where to watch {country}'),
         )
     ]
 
     for service, domain in STREAMING_SERVICES.items():
-        search = urllib.parse.urlencode({"q": f'site:{domain} "{title}"'})
-        links.append((f"{service} search", f"https://www.google.com/search?{search}"))
+        links.append(
+            (
+                f"{service} search",
+                make_google_search(f'site:{domain} "{title}"'),
+            )
+        )
 
-    print(f"\nLinks for: {title}")
+    print(f"\nSearch links for: {title}")
     for number, (label, url) in enumerate(links, start=1):
-        print(f"{number}. {label}: {url}")
+        print(f"{number}. {label}\n   {url}")
 
-    choice = input("\nEnter a link number to open it, or press Enter to quit: ").strip()
-    if not choice:
+    while True:
+        choice = input("\nEnter a number to open a link, or 0 to quit: ").strip()
+
+        if choice == "0":
+            return
+
+        try:
+            index = int(choice) - 1
+            if not 0 <= index < len(links):
+                raise ValueError
+        except ValueError:
+            print(f"Enter a number from 1 to {len(links)}, or 0 to quit.")
+            continue
+
+        opened = webbrowser.open_new_tab(links[index][1])
+        if not opened:
+            print("Could not open a browser here. Copy the URL printed above.")
         return
-
-    try:
-        index = int(choice) - 1
-        if not 0 <= index < len(links):
-            raise ValueError
-    except ValueError:
-        print("Please enter one of the listed numbers.")
-        return
-
-    webbrowser.open(links[index][1])
 
 
 if __name__ == "__main__":
