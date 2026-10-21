@@ -2,11 +2,12 @@ import urllib.parse
 
 
 STREAMING_SERVICES = {
-    "Netflix": "netflix.com",
-    "Prime Video": "primevideo.com",
-    "Disney+": "disneyplus.com",
-    "Hulu": "hulu.com",
-    "Apple TV": "tv.apple.com",
+    "Tubi (free with ads)": "tubitv.com",
+    "Pluto TV (free with ads)": "pluto.tv",
+    "Plex (free with ads)": "watch.plex.tv",
+    "The Roku Channel (free with ads)": "therokuchannel.roku.com",
+    "Kanopy (library access)": "kanopy.com",
+    "Hoopla (library access)": "hoopladigital.com",
 }
 
 
