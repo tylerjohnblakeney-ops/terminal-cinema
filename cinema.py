@@ -11,9 +11,6 @@ STREAMING_SITES = {
     "YouTube": "https://www.youtube.com/",
 }
 
-print("\nFree streaming sites:")
-for name, url in STREAMING_SITES.items():
-    print(f"{name}: {url}")
 
 
 def google_search_url(query):
@@ -27,6 +24,12 @@ def watch_show():
     if not title:
         print("Please enter a valid name.")
         return
+
+    print(f"\nFree streaming sites to check for: {title}")
+    for name, url in STREAMING_SITES.items():
+        print(f"{name}: {url}")
+
+    print("\nOpen a link and search for the title on that site's page.")
 
     links = [
         (
